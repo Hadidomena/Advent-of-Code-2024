@@ -27,14 +27,6 @@ type Guard struct {
 	position  []int
 }
 
-// Constructor function to create a new Guard
-func newGuard(position []int, direction int) *Guard {
-	return &Guard{
-		direction: direction,
-		position:  position,
-	}
-}
-
 // Function to check if a key is in the map
 func isIn(element string, dirMap map[string]int) bool {
 	_, exists := dirMap[element]
