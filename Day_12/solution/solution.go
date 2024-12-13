@@ -134,7 +134,7 @@ func solution(board [][]rune) []int {
 			}
 
 			borders := [][]int{}
-			for point, _ := range visited {
+			for point := range visited {
 				borders = append(borders, allBordering(board, point)...)
 			}
 
