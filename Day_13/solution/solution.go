@@ -37,7 +37,15 @@ func FindCombination(vec1, vec2, target [2]int64) (int64, int64) {
 	}
 	return int64(a), int64(b)
 }
-
+func changeFromMachine(firstLine, secondLine, thirdLine [2]int64) int64 {
+	// Used to calculate how much result for second or first part changes based
+	// on the currently processed machine
+	a, b := FindCombination(firstLine, secondLine, thirdLine)
+	if a != -1 && b != -1 {
+		return 3*a + b
+	}
+	return 0
+}
 func main() {
 	lines := utils.LoadFile(os.Args[1])
 	machineInput := [4][2]int64{}
@@ -50,24 +58,12 @@ func main() {
 			machineInput[i%4] = splitLine(line, false)
 			machineInput[i%4+1] = splitLine(line, true)
 		} else {
-			a, b := FindCombination(machineInput[0], machineInput[1], machineInput[2])
-			if a != -1 && b != -1 {
-				firstResult += 3*a + b
-			}
-			a, b = FindCombination(machineInput[0], machineInput[1], machineInput[3])
-			if a != -1 && b != -1 {
-				secondResult += 3*a + b
-			}
+			firstResult += changeFromMachine(machineInput[0], machineInput[1], machineInput[2])
+			secondResult += changeFromMachine(machineInput[0], machineInput[1], machineInput[3])
 		}
 	}
-	a, b := FindCombination(machineInput[0], machineInput[1], machineInput[2])
-	if a != -1 && b != -1 {
-		firstResult += 3*a + b
-	}
-	a, b = FindCombination(machineInput[0], machineInput[1], machineInput[3])
-	if a != -1 && b != -1 {
-		secondResult += 3*a + b
-	}
+	firstResult += changeFromMachine(machineInput[0], machineInput[1], machineInput[2])
+	secondResult += changeFromMachine(machineInput[0], machineInput[1], machineInput[3])
 	fmt.Println("Result for the first part is: ", firstResult)
 	fmt.Println("Result for the second part is: ", secondResult)
 }
